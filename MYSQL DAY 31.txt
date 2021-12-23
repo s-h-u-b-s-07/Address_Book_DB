@@ -1,0 +1,162 @@
+ADDRESS BOOK DATA BASE:-
+
+
+UC1:-
+
+mysql> create database addressbook;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbook        |
+| bridgelabzdemo     |
+| information_schema |
+| mysql              |
+| performance_schema |
+| pet                |
+| sys                |
++--------------------+
+7 rows in set (0.01 sec)
+
+
+UC2:-
+
+mysql> use addressbook;
+Database changed
+
+mysql> CREATE table addressbook(
+->SRNO INT unsigned NOT NULL auto_increment,
+->FirstName VARCHAR(100) NOT NULL,
+->LastName VARCHAR(100) NOT NULL,
+->Address VARCHAR(150) NOT NULL,
+->City VARCHAR(50) NOT NULL,
+->State VARCHAR(50) NOT NULL,
+->Zip VARCHAR(10) NOT NULL,
+->PhoneNumber VARCHAR(10) NOT NULL,
+->Email VARCHAR(150) NOT NULL, PRIMARY KEY(SRNO));
+
+mysql> describe addressbook;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| SRNO        | int unsigned | NO   | PRI | NULL    | auto_increment |
+| FirstName   | varchar(100) | NO   |     | NULL    |                |
+| LastName    | varchar(100) | NO   |     | NULL    |                |
+| Address     | varchar(150) | NO   |     | NULL    |                |
+| City        | varchar(50)  | NO   |     | NULL    |                |
+| State       | varchar(50)  | NO   |     | NULL    |                |
+| Zip         | varchar(20)  | NO   |     | NULL    |                |
+| PhoneNumber | varchar(12)  | NO   |     | NULL    |                |
+| Email       | varchar(150) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.01 sec)
+
+
+UC3:-
+
+mysql> insert into addressbook(firstName,LastName,Address,City,State,Zip,PhoneNumber,Email) values
+    -> 	('Shubham','Gawali','Panchavati','Nashik','Maharashtra','422003','7218645332','shubham@gmail.com'),
+    -> ('Sagar','Kajale','Panchavati','Nashik','Maharashtra','422002','7020664569','sagar@gmail.com'),
+    -> ('Akash','Satre','Panchavati','Nashik','Maharashtra','422401','9874561230','akash@gmail.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+| SRNO | FirstName | LastName | Address    | City   | State       | Zip    | PhoneNumber | Email             |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+|    1 | Shubham   | Gawali   | Panchavati | Nashik | Maharashtra | 422003 | 7218645332  | shubham@gmail.com |
+|    2 | Sagar     | Kajale   | Panchavati | Nashik | Maharashtra | 422002 | 7020664569  | sagar@gmail.com   |
+|    3 | Akash     | Satre    | Panchavati | Nashik | Maharashtra | 422401 | 9874561230  | akash@gmail.com   |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+3 rows in set (0.00 sec)
+
+
+
+UC4:-
+
+mysql> update addressbook set address='Mumbai' where firstName = 'Akash';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+| SRNO | FirstName | LastName | Address    | City   | State       | Zip    | PhoneNumber | Email             |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+|    1 | Shubham   | Gawali   | Panchavati | Nashik | Maharashtra | 422003 | 7218645332  | shubham@gmail.com |
+|    2 | Sagar     | Kajale   | Panchavati | Nashik | Maharashtra | 422002 | 7020664569  | sagar@gmail.com   |
+|    3 | Akash     | Satre    | Mumbai     | Nashik | Maharashtra | 422401 | 9874561230  | akash@gmail.com   |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+3 rows in set (0.01 sec)
+
+
+UC5:-
+
+mysql> Delete from addressbook where FirstName ='Akash';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+| SRNO | FirstName | LastName | Address    | City   | State       | Zip    | PhoneNumber | Email             |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+|    1 | Shubham   | Gawali   | Panchavati | Nashik | Maharashtra | 422003 | 7218645332  | shubham@gmail.com |
+|    2 | Sagar     | Kajale   | Panchavati | Nashik | Maharashtra | 422002 | 7020664569  | sagar@gmail.com   |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+2 rows in set (0.01 sec)
+
+
+UC6:-
+
+mysql> select * from addressbook where city='nashik' or state ='Maharashtra';
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+| SRNO | FirstName | LastName | Address    | City   | State       | Zip    | PhoneNumber | Email             |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+|    1 | Shubham   | Gawali   | Panchavati | Nashik | Maharashtra | 422003 | 7218645332  | shubham@gmail.com |
+|    2 | Sagar     | Kajale   | Panchavati | Nashik | Maharashtra | 422002 | 7020664569  | sagar@gmail.com   |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+2 rows in set (0.00 sec)
+
+
+UC7:-
+
+mysql> select city, state, count(*) from addressbook group by city;
++--------+-------------+----------+
+| city   | state       | count(*) |
++--------+-------------+----------+
+| Nashik | Maharashtra |        2 |
++--------+-------------+----------+
+1 row in set (0.01 sec)
+
+
+UC8:-
+
+mysql> insert into addressbook(firstName,LastName,Address,City,State,Zip,PhoneNumber,Email) values
+    -> ('Akash','Satre','Boriwali','Mumbai','Maharashtra','422401','9874561230','akash@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+| SRNO | FirstName | LastName | Address    | City   | State       | Zip    | PhoneNumber | Email             |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+|    1 | Shubham   | Gawali   | Panchavati | Nashik | Maharashtra | 422003 | 7218645332  | shubham@gmail.com |
+|    2 | Sagar     | Kajale   | Panchavati | Nashik | Maharashtra | 422002 | 7020664569  | sagar@gmail.com   |
+|    4 | Akash     | Satre    | Boriwali   | Mumbai | Maharashtra | 422401 | 9874561230  | akash@gmail.com   |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from addressbook where city ='Nashik' order by firstname, lastname desc;
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+| SRNO | FirstName | LastName | Address    | City   | State       | Zip    | PhoneNumber | Email             |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+|    2 | Sagar     | Kajale   | Panchavati | Nashik | Maharashtra | 422002 | 7020664569  | sagar@gmail.com   |
+|    1 | Shubham   | Gawali   | Panchavati | Nashik | Maharashtra | 422003 | 7218645332  | shubham@gmail.com |
++------+-----------+----------+------------+--------+-------------+--------+-------------+-------------------+
+2 rows in set (0.00 sec)
+
+
+UC9:-
+
+
+
